@@ -84,15 +84,7 @@ export class AccountLockout {
       _account_lockout_expires_at: Parse._encode(new Date(now.getTime() + this._config.accountLockout.duration * 60 * 1000))
     };
 
-    return this._config.database.update('_User', query, updateFields)
-      .catch(err => {
-        if (err && err.code && err.message && err.code === 101 && err.message === 'Object not found.') {
-          return; // nothing to update so we are good
-        } else {
-          throw err; // unknown error
-        }
-      });
-  }
+    
 
   /**
    * if _account_lockout_expires_at > current_time and _failed_login_count > threshold
